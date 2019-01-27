@@ -1,3 +1,5 @@
+package accessing.npriv;
+
 /**
  * Created by mtumilowicz on 2019-01-27.
  */
