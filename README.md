@@ -83,7 +83,7 @@ Naming convention: `<outer-class-name>$<member-inner-class-name>`
         * additional param (Outer) is added to the existing constructor
     * `Outer.class` same as `(1.)`
 1. Accessing Outer fields, package: `accessing`
-    * private, package: `accessing.priv`
+    * accessing private fields, package: `accessing.priv`
         ```
         class Outer {
         
@@ -129,7 +129,7 @@ Naming convention: `<outer-class-name>$<member-inner-class-name>`
                 }
             }
             ```
-    * non-private, package: `accessing.npriv`
+    * accessing non-private fields, package: `accessing.npriv`
         ```
         class Outer {
             String s = "outer";
@@ -145,11 +145,14 @@ Naming convention: `<outer-class-name>$<member-inner-class-name>`
             * `Outer$Inner`
                 ```
                 class Outer$Inner {
+                
                     final Outer this$0;
+                    
                     Outer$Inner(Outer outer) {
                         this$0 = outer;
                         super();
                     }
+                    
                     String getS() {
                         return this$0.s;
                     }
@@ -158,6 +161,7 @@ Naming convention: `<outer-class-name>$<member-inner-class-name>`
             * `Outer.class`
                 ```
                 class Outer {
+                
                     private String s = null;
                     
                     Outer() {
