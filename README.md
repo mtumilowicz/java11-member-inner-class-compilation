@@ -167,9 +167,6 @@ Naming convention: `<outer-class-name>$<member-inner-class-name>`
                 Outer() {
                     dummy = "outer";
                 }
-                
-                static String access$000(Outer outer) {
-                    return outer.s;
-                    }
             }
             ```
+            * no static method this time
