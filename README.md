@@ -37,13 +37,16 @@ Naming convention: `<outer-class-name>$<member-inner-class-name>`
     * `Outer$Inner.class`
         ```
         class Outer$Inner {
+        
             final Outer this$0;
+            
             Outer$Inner(Outer outer) {
                 this$0 = outer;
                 super();
             }
         }
         ```
+        * final field for Outer instance was added
         * note that `super()` is **after** setting the field
         * a one-param constructor that accepts `Outer` is inserted during compilation
     * `Outer.class`
@@ -68,7 +71,9 @@ Naming convention: `<outer-class-name>$<member-inner-class-name>`
     * `Outer$Inner`
         ```
         class Outer$Inner {
+        
             final Outer this$0;
+            
             Outer$Inner(Outer outer, String s) {
                 this$0 = outer;
                 super();
@@ -81,6 +86,7 @@ Naming convention: `<outer-class-name>$<member-inner-class-name>`
     * private, package: `accessing.priv`
         ```
         class Outer {
+        
             private String s = "outer";
         
             class Inner {
@@ -91,20 +97,6 @@ Naming convention: `<outer-class-name>$<member-inner-class-name>`
         }
         ```
         is compiled to two classes:
-        * `Outer$Inner`
-            ```
-            class Outer$Inner {
-                final Outer this$0;
-                Outer$Inner(Outer outer) {
-                    this$0 = outer;
-                    super();
-                }
-                
-                String getS() {
-                    return Outer.access$000(this$0);
-                }
-            }
-            ```
         * `Outer.class`
             ```
             class Outer {
@@ -117,6 +109,24 @@ Naming convention: `<outer-class-name>$<member-inner-class-name>`
                 static String access$000(Outer outer) {
                     return outer.s;
                     }
+            }
+            ```
+            * static method for extracting private field (flagged by
+            compiler - we don't have direct access)
+        * `Outer$Inner`
+            ```
+            class Outer$Inner {
+            
+                final Outer this$0;
+                
+                Outer$Inner(Outer outer) {
+                    this$0 = outer;
+                    super();
+                }
+                
+                String getS() {
+                    return Outer.access$000(this$0);
+                }
             }
             ```
     * non-private, package: `accessing.npriv`
