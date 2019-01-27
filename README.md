@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/mtumilowicz/java11-member-inner-class-compilation.svg?branch=master)](https://travis-ci.com/mtumilowicz/java11-member-inner-class-compilation)
+
 # java11-member-inner-class-compilation
 We will discuss how member inner classes are compiled.
 
