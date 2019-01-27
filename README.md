@@ -102,7 +102,7 @@ Naming convention: `<outer-class-name>$<member-inner-class-name>`
             private String s = null;
             
             Outer() {
-                dummy = "outer";
+                s = "outer";
             }
             
             static String access$000(Outer outer) {
@@ -164,7 +164,7 @@ Naming convention: `<outer-class-name>$<member-inner-class-name>`
             private String s = null;
             
             Outer() {
-                dummy = "outer";
+                s = "outer";
             }
         }
         ```
