@@ -26,7 +26,7 @@ Naming convention: `<outer-class-name>$<member-inner-class-name>`
     "java_home\bin\javap.exe" -c path_to_compiled\Outer$Inner.class
 
 # project description
-1. Only classes (the easiest example), package: `easy`
+1. The easiest example, package: `easy`
     ```
     class Outer {
         class Inner {
@@ -46,7 +46,7 @@ Naming convention: `<outer-class-name>$<member-inner-class-name>`
             }
         }
         ```
-        * final field for Outer instance was added
+        * final field for `Outer` instance was added
         * note that `super()` is **after** setting the field
         * a one-param constructor that accepts `Outer` is inserted during compilation
     * `Outer.class`
@@ -80,9 +80,9 @@ Naming convention: `<outer-class-name>$<member-inner-class-name>`
             }
         }
         ```
-        * additional param (Outer) is added to the existing constructor
+        * additional param (`Outer`) was added to the existing constructor
     * `Outer.class` same as `(1.)`
-1. Accessing Outer fields, package: `accessing`
+1. Accessing `Outer` fields, package: `accessing`
     * accessing private fields, package: `accessing.priv`
         ```
         class Outer {
@@ -108,7 +108,7 @@ Naming convention: `<outer-class-name>$<member-inner-class-name>`
                 
                 static String access$000(Outer outer) {
                     return outer.s;
-                    }
+                }
             }
             ```
             * static method for extracting private field (flagged by
@@ -142,34 +142,34 @@ Naming convention: `<outer-class-name>$<member-inner-class-name>`
         }
         ```
         is compiled to two classes:
-            * `Outer$Inner`
-                ```
-                class Outer$Inner {
+        * `Outer$Inner`
+            ```
+            class Outer$Inner {
+            
+                final Outer this$0;
                 
-                    final Outer this$0;
-                    
-                    Outer$Inner(Outer outer) {
-                        this$0 = outer;
-                        super();
-                    }
-                    
-                    String getS() {
-                        return this$0.s;
-                    }
+                Outer$Inner(Outer outer) {
+                    this$0 = outer;
+                    super();
                 }
-                ```
-            * `Outer.class`
-                ```
-                class Outer {
                 
-                    private String s = null;
-                    
-                    Outer() {
-                        dummy = "outer";
-                    }
-                    
-                    static String access$000(Outer outer) {
-                        return outer.s;
-                        }
+                String getS() {
+                    return this$0.s;
                 }
-                ```
+            }
+            ```
+        * `Outer.class`
+            ```
+            class Outer {
+            
+                private String s = null;
+                
+                Outer() {
+                    dummy = "outer";
+                }
+                
+                static String access$000(Outer outer) {
+                    return outer.s;
+                    }
+            }
+            ```
