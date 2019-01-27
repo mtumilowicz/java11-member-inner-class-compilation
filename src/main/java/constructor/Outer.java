@@ -6,7 +6,6 @@ package constructor;
 class Outer {
     class Inner {
         Inner(String s) {
-            
         }
     }
 }
