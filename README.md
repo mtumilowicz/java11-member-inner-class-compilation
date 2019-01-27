@@ -37,7 +37,7 @@ Naming convention: <outer-class-name>$<member-inner-class-name>
         ```
         class Outer$Inner {
             final Outer this$0;
-            public Outer$Inner(Outer outer) {
+            Outer$Inner(Outer outer) {
                 this$0 = outer;
                 super();
             }
@@ -48,7 +48,7 @@ Naming convention: <outer-class-name>$<member-inner-class-name>
     * `Outer.class`
         ```
         class Outer {
-            public Outer() {
+            Outer() {
             }
         }
         ```
@@ -56,14 +56,19 @@ Naming convention: <outer-class-name>$<member-inner-class-name>
         in the compilation
 1. Inner class has constructor, package: `constructor`
     ```
-    
+    class Outer {
+        class Inner {
+            Inner(String s) {
+            }
+        }
+    }
     ```
     is compiled to two classes:
     * `Outer$Inner`
         ```
-        public class Outer$Inner {
+        class Outer$Inner {
             final Outer this$0;
-            public Outer$Inner(Outer outer, String s) {
+            Outer$Inner(Outer outer, String s) {
                 this$0 = outer;
                 super();
             }
@@ -73,5 +78,83 @@ Naming convention: <outer-class-name>$<member-inner-class-name>
     * `Outer.class` same as `(1.)`
 1. Accessing Outer fields, package: `accessing`
     * private, package: `accessing.priv`
+        ```
+        class Outer {
+            private String s = "outer";
         
+            class Inner {
+                String getS() {
+                    return s;
+                }
+            }
+        }
+        ```
+        is compiled to two classes:
+            * `Outer$Inner`
+                ```
+                class Outer$Inner {
+                    final Outer this$0;
+                    Outer$Inner(Outer outer) {
+                        this$0 = outer;
+                        super();
+                    }
+                    
+                    String getS() {
+                        return Outer.access$000(this$0);
+                    }
+                }
+                ```
+            * `Outer.class`
+                ```
+                class Outer {
+                    private String s = null;
+                    
+                    Outer() {
+                        dummy = "outer";
+                    }
+                    
+                    static String access$000(Outer outer) {
+                        return outer.s;
+                        }
+                }
+                ```
     * non-private, package: `accessing.npriv`
+        ```
+        class Outer {
+            String s = "outer";
+        
+            class Inner {
+                String getS() {
+                    return s;
+                }
+            }
+        }
+        ```
+        is compiled to two classes:
+            * `Outer$Inner`
+                ```
+                class Outer$Inner {
+                    final Outer this$0;
+                    Outer$Inner(Outer outer) {
+                        this$0 = outer;
+                        super();
+                    }
+                    String getS() {
+                        return this$0.s;
+                    }
+                }
+                ```
+            * `Outer.class`
+                ```
+                class Outer {
+                    private String s = null;
+                    
+                    Outer() {
+                        dummy = "outer";
+                    }
+                    
+                    static String access$000(Outer outer) {
+                        return outer.s;
+                        }
+                }
+                ```
