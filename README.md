@@ -82,91 +82,90 @@ Naming convention: `<outer-class-name>$<member-inner-class-name>`
         ```
         * additional param (`Outer`) was added to the existing constructor
     * `Outer.class` same as `(1.)`
-1. Accessing `Outer` fields, package: `accessing`
-    * accessing private fields, package: `accessing.priv`
+1. accessing private fields, package: `accessing.priv`
+    ```
+    class Outer {
+    
+        private String s = "outer";
+    
+        class Inner {
+            String getS() {
+                return s;
+            }
+        }
+    }
+    ```
+    is compiled to two classes:
+    * `Outer.class`
         ```
         class Outer {
-        
-            private String s = "outer";
-        
-            class Inner {
-                String getS() {
-                    return s;
-                }
+            private String s = null;
+            
+            Outer() {
+                dummy = "outer";
+            }
+            
+            static String access$000(Outer outer) {
+                return outer.s;
             }
         }
         ```
-        is compiled to two classes:
-        * `Outer.class`
-            ```
-            class Outer {
-                private String s = null;
-                
-                Outer() {
-                    dummy = "outer";
-                }
-                
-                static String access$000(Outer outer) {
-                    return outer.s;
-                }
-            }
-            ```
-            * static method for extracting private field (flagged by
-            compiler - we don't have direct access)
-        * `Outer$Inner`
-            ```
-            class Outer$Inner {
-            
-                final Outer this$0;
-                
-                Outer$Inner(Outer outer) {
-                    this$0 = outer;
-                    super();
-                }
-                
-                String getS() {
-                    return Outer.access$000(this$0);
-                }
-            }
-            ```
-    * accessing non-private fields, package: `accessing.npriv`
+        * static method for extracting private field (flagged by
+        compiler - we don't have direct access)
+    * `Outer$Inner`
         ```
-        class Outer {
-            String s = "outer";
+        class Outer$Inner {
         
-            class Inner {
-                String getS() {
-                    return s;
-                }
+            final Outer this$0;
+            
+            Outer$Inner(Outer outer) {
+                this$0 = outer;
+                super();
+            }
+            
+            String getS() {
+                return Outer.access$000(this$0);
             }
         }
         ```
-        is compiled to two classes:
-        * `Outer$Inner`
-            ```
-            class Outer$Inner {
-            
-                final Outer this$0;
-                
-                Outer$Inner(Outer outer) {
-                    this$0 = outer;
-                    super();
-                }
-                
-                String getS() {
-                    return this$0.s;
-                }
+1. accessing non-private fields, package: `accessing.npriv`
+    ```
+    class Outer {
+        String s = "outer";
+    
+        class Inner {
+            String getS() {
+                return s;
             }
-            ```
-        * `Outer.class`
-            ```
-            class Outer {
+        }
+    }
+    ```
+    is compiled to two classes:
+    * `Outer$Inner`
+        ```
+        class Outer$Inner {
+        
+            final Outer this$0;
             
-                private String s = null;
-                
-                Outer() {
-                    dummy = "outer";
-                }
+            Outer$Inner(Outer outer) {
+                this$0 = outer;
+                super();
             }
-            ```
-            * no static method this time
+            
+            String getS() {
+                return this$0.s;
+            }
+        }
+        ```
+    * `Outer.class`
+        ```
+        class Outer {
+        
+            private String s = null;
+            
+            Outer() {
+                dummy = "outer";
+            }
+        }
+        ```
+        * no static method this time
